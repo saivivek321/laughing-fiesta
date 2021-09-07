@@ -10,7 +10,7 @@
 #include<sys/wait.h>
 
 #define BUFFERSIZE 256 //Max amount allowed to read from input
-#define INITIAL_PROMPT "\t\tLab2_Assignment- Mini Linux Terminal\n" //initial display message
+#define INITIAL_PROMPT "\t\tLab2_Assignment - Mini Linux Terminal\n" //initial display message
 #define PROMPT "lab2_assignment >> " //Shell prompt
 #define PROMPTSIZE sizeof(PROMPT) //sizeof shell prompt
 #define ERROR -1 //for when an error is encountered
@@ -20,9 +20,9 @@ void display_Prompt(){printf("%s", PROMPT);}
 
 // Function to manage file I/O redirection
 void fileIOManager(char **argv, char *source, char *destination, int option){
-  int fd; //file descriptor
   if((pid == fork()) == ERROR) perror("Error: Unable to create child process.\n"),return;
   if(pid == 0){
+    int fd; //file descriptor
     //file output redirection
     if(option == 0){
       fd = open(destination, O_CREAT | O_TRUNC | O_WRONLY, 0600); //create a file for writing only
@@ -50,7 +50,6 @@ void fileIOManager(char **argv, char *source, char *destination, int option){
 void pipeManager(char **argv){
   int fd1[2], fd2[2], commands_count = 0, aux0 = 0, aux1 = 0, aux2 = 0, end_of_Command;
   char *commTok[BUFFERSIZE];
-  //calculate number of commands separated by '|'
   for(int i = 0; argv[i] != NULL; i++)
     if(strcmp(argv[i], "|") == 0) commands_count++;
   commands_count++;
@@ -58,13 +57,8 @@ void pipeManager(char **argv){
     aux1 = 0;
     //using auxiliary variables as indices and a pointer array to store the commands
     while (strcmp(argv[aux0], "|") != 0) {
-      commTok[aux1] = argv[aux0];
-      aux0++;
-      aux1++;
-      if (argv[aux0] == NULL) {
-        end_of_Command = 1;
-        break;
-      }
+      commTok[aux1++] = argv[aux0++];
+      if (argv[aux0] == NULL) end_of_Command = 1,break;
     }
     commTok[aux1] = NULL;   //to mark the end of the command before being executed
     aux0++;
@@ -269,4 +263,22 @@ The main problem with this function usage is that,
 
 ************************  getpid() ****************
   this returns the process id that is created when the process is forked in this process
+
+**************************  waitpid()  **************************
+ suspends the calling process until the system gets status information on the child
+
+*----  pid_t => integer number of the process id type
+
+************************** pipe()  ***********************
+ pipe is a connection between two processes 
+  -> so that output of one process becomes input of other process
+ If a process tries to read before something is written to the pipe, the process is suspended until something is written.
+ this takes an array of size two as parameter, -> 
+  1st to read data in the pipe
+  2nd to write data in the pipe
+  and if anything goes wrong, then returns -1 and if all good then returns 0
+
+**********************  dup2()  ******************************
+ 
+
 */
