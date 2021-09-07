@@ -119,7 +119,7 @@ void pipeManager(char **argv){
   }
 }
 
-bool compare(char s){
+bool compare(char *s){
   if((strcmp(s,">") == 0) ||(strcmp(s,"<") == 0) ||(strcmp(s,"&") == 0)) return true;
   return false;
 }
