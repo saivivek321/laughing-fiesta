@@ -8,7 +8,6 @@
 #include<sys/stat.h>  
 #include<fcntl.h>     //pipe() function call
 
-
 #define INITIAL_MSG "\n\n-------------------------Sai Vivek - Own Terminal-------------------------\n\n" //Inital Promt Message 
 #define MSG "\033[36msai_vivek_mini_terminal $ "//for msg to be printed in green color
 #define MSGSIZE 128 //sizeof shell prompt
@@ -147,7 +146,6 @@ int execute_pipe_commands(char **first,char ** second)// Executes the 2 arrays b
     }
  }
 
-
 int pipeManager(char **inputcommands,int n){ //Divides the Input commands into 2 arrays based on pipe position 
 
       char *first[MSGSIZE];
@@ -167,7 +165,6 @@ int pipeManager(char **inputcommands,int n){ //Divides the Input commands into 2
        execute_pipe_commands(first,second); // Executes the 2 arrays by piping 
 
 }
-
 
 int Execute_the_Commands(char **inputcommands,int n,bool pipePresent){  // Main Execution Code
     if(strcmp(inputcommands[0], "clear") == 0) system("clear"),printf("%s", INITIAL_MSG); // To clear the terminal
@@ -215,8 +212,6 @@ int main(int *argc, char **argv[]){
      
     Execute_the_Commands(inputcommands,n,isPipeThere);   // Main Execution Code
    
-
-
   }
   exit(0);
 }
