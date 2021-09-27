@@ -42,8 +42,8 @@ int FileManager(char **inputcommands,int n){ // I/O redirections are done here
             int fd = open(inputcommands[3],O_WRONLY); //create a file for writing only
             dup2(fd,1); //standard input is replaced with our file
             close(fd); //close file
-            inputcommands[2]='\0';  
-            inputcommands[3]='\0';
+            inputcommands[2]='\0';  //removing >
+            inputcommands[3]='\0';  // removing destination file
 
                 execute(inputcommands);// Execute the command
           
